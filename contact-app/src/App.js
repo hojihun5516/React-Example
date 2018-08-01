@@ -4,28 +4,66 @@ import PhoneInfoList from './components/PhoneInfoList';
 
 class App extends Component {
 
-  id = 0;
+  id = 3;
 
   state = {
-    information: [],
+    information: [
+      {
+        id: 0,
+        name: '홍길동',
+        phone: '010-0000-0001'
+      },
+      {
+        id: 1,
+        name: '허지훈',
+        phone: '010-0000-0002'
+      },
+      {
+        id: 2,
+        name: '이니에스타',
+        phone: '010-0000-0003'
+      }
+    ],
+    keyword: '',
   }
-  handleRemove = (id) =>{
-    const {information} = this.state;
+
+  handleChange = (e) => {
     this.setState({
-      information : information.filter(info => info.id !== id)
-    });
+      keyword: e.target.value,
+    })
   }
+
   handleCreate = (data) => {
     const { information } = this.state;
     this.setState({
-      //기존에있던배열은 안건드리고 새로운걸 push한다고생각
       information: information.concat({
-        //이건 name: data.name
-        //phone: data.phone와 같은말임
         ...data,
-
         id: this.id++,
       })
+    });
+  }
+
+  handleRemove = (id) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.filter(info => info.id !== id)
+    });
+  }
+
+  handleUpdate = (id, data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.map(
+        info => {
+          if (info.id === id) {
+            return {
+              id,
+              ...data,
+            };
+          }
+          return info;
+        }
+      )
     });
   }
 
@@ -33,7 +71,18 @@ class App extends Component {
     return (
       <div>
         <PhoneForm onCreate={this.handleCreate}/>
-        <PhoneInfoList onRemove={this.handleRemove} data={this.state.information}/>
+        <input
+          value={this.state.keyword}
+          onChange={this.handleChange}
+          placeholder="검색..."
+        />
+        <PhoneInfoList
+          data={this.state.information.filter(
+            info => info.name.indexOf(this.state.keyword) > -1
+          )}
+          onRemove={this.handleRemove}
+          onUpdate={this.handleUpdate}
+        />
       </div>
     );
   }

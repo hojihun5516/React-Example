@@ -7,21 +7,21 @@ class PhoneForm extends Component {
     phone: '',
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
   handleSubmit = (e) => {
     // 페이지 새로고침방지
     e.preventDefault();
     //state값을 App.js의 handleCreate에 보내준다
     this.props.onCreate(this.state);
     this.setState({
-      name: '',
+      name : '',
       phone: '',
     })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   render() {
