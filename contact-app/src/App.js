@@ -15,12 +15,12 @@ class App extends Component {
       },
       {
         id: 1,
-        name: '허지훈',
+        name: '김민준',
         phone: '010-0000-0002'
       },
       {
         id: 2,
-        name: '이니에스타',
+        name: '김벨로퍼트',
         phone: '010-0000-0003'
       }
     ],
